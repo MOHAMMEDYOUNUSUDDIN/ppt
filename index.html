@@ -1,0 +1,695 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Technology in Engineering</title>
+<style>
+*{box-sizing:border-box} html,body{margin:0;height:100%;overflow:hidden;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#111;color:#17202a}
+body{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth}
+.track{display:flex;width:1500vw;height:100vh}
+.scene{position:relative;flex:0 0 100vw;height:100vh;scroll-snap-align:start;background:var(--bg);display:grid;grid-template-columns:43% 57%;overflow:hidden;isolation:isolate}
+.scene:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 40%,rgba(255,255,255,.85),transparent 35%),linear-gradient(115deg,transparent 40%,rgba(255,255,255,.28));z-index:-1}
+.scene:after{content:"";position:absolute;left:43%;top:8%;height:84%;width:1px;background:color-mix(in srgb,var(--accent),transparent 75%);}
+.copy{padding:8vh 3.5vw 5vh 6vw;display:flex;flex-direction:column;justify-content:center;z-index:5}
+.chapter{font-size:13px;letter-spacing:.24em;color:var(--accent);font-weight:800;margin-bottom:14px}
+h1{font-size:clamp(34px,4.3vw,74px);line-height:.96;margin:0 0 15px;font-weight:900;letter-spacing:-.045em;color:#17202a}
+.subtitle{font-size:clamp(15px,1.25vw,22px);max-width:650px;color:#53606c;margin:0 0 18px;line-height:1.4}
+.rule{width:100px;height:5px;background:var(--accent);border-radius:99px;margin:4px 0 24px}
+h2{font-size:12px;letter-spacing:.2em;color:var(--accent);margin:0 0 10px}
+ol{margin:0 0 18px;padding-left:21px;max-width:700px}
+li{font-size:clamp(14px,1.05vw,18px);line-height:1.48;margin:3px 0;color:#26323d}
+.example-title{margin-top:4px}
+.examples{display:flex;gap:7px;flex-wrap:wrap;max-width:700px}
+.examples span{background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.08);padding:7px 10px;border-radius:999px;font-size:12px;color:#34404c}
+.visual{position:relative;display:flex;align-items:center;justify-content:center;padding:6vh 4vw 6vh 2vw}
+.visual:before{display:none}
+.video-frame{position:relative;width:min(54vw,1000px);height:min(67vh,700px);border:0;border-radius:24px;box-shadow:0 30px 90px rgba(20,35,50,.22);background:#0c0c0c;overflow:hidden}.video-frame video{width:100%;height:100%;border:0;display:block;border-radius:24px;background:#000;object-fit:cover}.video-frame:not([data-loaded="1"])::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#1a1a1a,#050505)}.video-frame:not([data-loaded="1"])::before{content:"Loading video…";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);font-size:13px;letter-spacing:.08em;z-index:1;font-family:Inter,sans-serif}
+.video-fallback{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6vh 4vw;color:#fff;background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.07),transparent 55%),linear-gradient(135deg,#1a1a1a,#050505);border-radius:24px;overflow:hidden}
+.video-fallback:before{content:"";position:absolute;inset:-20%;background-image:radial-gradient(rgba(255,255,255,.06) 1.5px,transparent 1.5px);background-size:28px 28px;animation:vfDrift 16s linear infinite;z-index:0}
+.video-fallback>*{position:relative;z-index:1}
+.video-fallback .vf-tag{font-size:10px;letter-spacing:.22em;font-weight:800;color:rgba(255,255,255,.5);margin-bottom:18px}
+.video-fallback .vf-icon{width:60px;height:60px;border-radius:50%;border:1.5px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:24px}
+.video-fallback .vf-title{font-size:clamp(19px,2vw,27px);font-weight:900;letter-spacing:-.02em;margin:0 0 10px;color:#fff}
+.video-fallback .vf-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,.66);max-width:420px;margin:0}
+@keyframes vfDrift{from{transform:translate(0,0)}to{transform:translate(28px,14px)}}
+.visual-label{position:absolute;top:7vh;right:4vw;z-index:3;font-size:10px;letter-spacing:.18em;color:var(--accent);font-weight:900}
+.visual-foot{position:absolute;bottom:6vh;right:4vw;font-size:9px;letter-spacing:.13em;color:#65717d}
+.scene:nth-child(1){--accent:#8a4b1f}
+@media(max-width:900px){.scene{grid-template-columns:1fr 1.15fr}.copy{padding-left:4vw}h1{font-size:35px}li{font-size:13px}.video-frame{width:52vw;height:60vh}}
+
+<style>
+.info-visual{
+  position:relative; width:min(54vw,1000px); height:min(67vh,700px);
+  border-radius:24px; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.96); border:1px solid rgba(0,0,0,.12);
+  box-shadow:0 18px 45px rgba(20,35,50,.14); overflow:hidden;
+}
+.hero-word{font-size:clamp(42px,6vw,92px);line-height:.9;font-weight:900;letter-spacing:-.06em;text-align:center;color:#17202a;text-shadow:none;filter:none;opacity:1}
+.hero-word span{font-size:.55em;color:var(--accent)}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:78%}
+.mini-card{padding:24px;border-radius:18px;background:#ffffff;border:1px solid rgba(0,0,0,.08);display:flex;flex-direction:column;gap:8px}
+.mini-card b{font-size:16px;letter-spacing:.12em;color:var(--accent)}
+.mini-card span{font-size:14px;color:#34404c}
+.challenge-stack{width:78%;display:flex;flex-direction:column;gap:12px}
+.challenge-stack div{display:grid;grid-template-columns:42px 1fr;column-gap:10px;align-items:center;padding:17px 20px;border-radius:14px;background:#ffffff;border:1px solid rgba(0,0,0,.10);font-size:13px;color:#34404c}
+.challenge-stack div b{font-size:18px;color:#25313b}
+.challenge-stack div span{grid-column:2;font-size:12px}
+.achievement-ring{width:280px;height:280px;border-radius:50%;border:18px solid rgba(52,91,134,.16);outline:5px solid var(--accent);outline-offset:-26px;display:flex;align-items:center;justify-content:center;text-align:center}
+.achievement-ring strong{display:block;font-size:90px;line-height:.8;color:#25313b}
+.achievement-ring span{font-size:13px;letter-spacing:.2em;color:var(--accent);font-weight:800}
+@media print{
+  @page{size:A4 landscape;margin:0}
+  html,body{width:100%;height:auto;overflow:visible;background:#fff}
+  body{scroll-snap-type:none}
+  .track{display:block;width:100%;height:auto}
+  .scene{width:100%;height:100vh;min-height:100vh;page-break-after:always;break-after:page;overflow:hidden}
+  .scene:last-child{page-break-after:auto;break-after:auto}
+  .video-frame{width:min(54vw,1000px);height:min(67vh,700px)}
+}
+
+.video-frame{contain:layout paint;}
+
+/* ================= QUIZ + RESULT OVERLAY ================= */
+.start-quiz-row{margin-top:22px}
+.start-quiz-btn{font-family:Inter,sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em;color:#fff;background:var(--accent);border:none;padding:14px 28px;border-radius:99px;cursor:pointer;display:inline-flex;align-items:center;gap:9px;box-shadow:0 14px 34px -10px rgba(0,0,0,.35);transition:transform .2s ease,box-shadow .2s ease}
+.start-quiz-btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(0,0,0,.45)}
+
+#quizOverlay,#resultOverlay{position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;background:#f3f0e8;overflow:hidden}
+#quizOverlay:before,#resultOverlay:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 40%,rgba(255,255,255,.85),transparent 35%),linear-gradient(115deg,transparent 40%,rgba(255,255,255,.28));z-index:0}
+#quizOverlay.show,#resultOverlay.show{display:flex}
+
+.quiz-card{position:relative;z-index:1;width:min(90vw,760px);background:rgba(255,255,255,.9);border:1px solid rgba(0,0,0,.08);border-radius:24px;box-shadow:0 30px 90px rgba(20,35,50,.18);padding:clamp(28px,4.5vh,52px) clamp(28px,4.5vw,56px)}
+.quiz-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px}
+.quiz-eyebrow{font-size:12px;letter-spacing:.22em;font-weight:800;color:var(--quiz-accent,#8a4b1f)}
+.quiz-counter{font-size:12px;letter-spacing:.14em;color:#65717d;font-weight:600}
+.quiz-question{font-size:clamp(19px,2.4vw,28px);font-weight:900;letter-spacing:-.02em;color:#17202a;margin:0 0 22px;line-height:1.28}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{text-align:left;padding:15px 18px;border-radius:14px;border:1px solid rgba(0,0,0,.1);background:#fff;font-size:15px;color:#26323d;cursor:pointer;transition:all .18s ease;font-family:Inter,sans-serif}
+.quiz-opt:hover:not(:disabled){border-color:var(--quiz-accent,#8a4b1f);background:color-mix(in srgb,var(--quiz-accent,#8a4b1f),transparent 92%)}
+.quiz-opt.correct{border-color:#2f8a55;background:rgba(47,138,85,.12);color:#1d5c39}
+.quiz-opt.wrong{border-color:#b3402f;background:rgba(179,64,47,.1);color:#7c2c20}
+.quiz-opt:disabled{cursor:default}
+.quiz-foot{display:flex;justify-content:flex-end;margin-top:24px;min-height:44px}
+.quiz-next-btn{font-family:Inter,sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;color:#fff;background:#17202a;border:none;padding:12px 22px;border-radius:99px;cursor:pointer;display:none}
+.quiz-next-btn.show{display:inline-flex}
+
+.result-card{position:relative;z-index:1;width:min(90vw,560px);background:rgba(255,255,255,.92);border:1px solid rgba(0,0,0,.08);border-radius:24px;box-shadow:0 30px 90px rgba(20,35,50,.18);padding:clamp(30px,5vh,52px) clamp(28px,5vw,48px);text-align:center}
+.result-eyebrow{font-size:12px;letter-spacing:.22em;font-weight:800;color:#65717d;margin-bottom:18px}
+.result-ring-wrap{position:relative;width:170px;height:170px;margin:0 auto 20px}
+.result-ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg)}
+.result-ring-wrap circle{fill:none;stroke-width:10}
+.result-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:#17202a}
+.result-stats{display:flex;justify-content:center;gap:30px;margin:6px 0 28px}
+.result-stat b{display:block;font-size:26px;font-weight:900}
+.result-stat span{font-size:11px;letter-spacing:.14em;color:#65717d;font-weight:700}
+.result-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.result-btn{font-family:Inter,sans-serif;font-weight:800;font-size:13px;letter-spacing:.04em;padding:13px 22px;border-radius:99px;cursor:pointer;border:1px solid rgba(0,0,0,.14);background:#fff;color:#17202a}
+.result-btn.primary{background:#17202a;color:#fff;border-color:#17202a}
+</style></head>
+<body>
+<div class="track">
+
+<section class="scene" style="--bg:#f3f0e8;--accent:#5b3a29">
+  <div class="copy">
+    <div class="chapter">01 / 16</div>
+    <h1>TECHNOLOGY IN ENGINEERING</h1>
+    <p class="subtitle">How technology transforms engineering, industry and everyday life</p>
+    <div class="rule"></div>
+    <h2>OVERVIEW</h2><ol><li>Technology improves how engineers design, build, test and operate systems.</li><li>Digital tools connect engineering disciplines through data, automation and simulation.</li><li>The next generation combines AI, robotics, clean energy and intelligent infrastructure.</li></ol>
+  </div>
+  <div class="visual">
+    <div class="visual-label">ENGINEERING • TECHNOLOGY • INNOVATION</div>
+    <div class="info-visual"><div class="hero-word">ENGINEERING<br><span>×</span><br>TECHNOLOGY</div></div>
+  </div>
+</section>
+
+<section class="scene" style="--bg:#f6efe3;--accent:#8a4b1f">
+  <div class="copy">
+    <div class="chapter">02 / 16</div>
+    <h1>CIVIL ENGINEERING</h1>
+    <p class="subtitle">From structural foundations to intelligent infrastructure</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Stone and timber structures</li><li>Steel and reinforced concrete</li><li>Computer-aided structural design</li><li>Digital construction and prefabrication</li><li>Smart monitoring and structural health</li><li>Digital twins and predictive maintenance</li><li>Iconic Indian infrastructure at mega-scale</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Chenab Railway Bridge</span><span>New Pamban Bridge</span><span>Metro viaducts</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">BRIDGE • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="civil" data-title="CIVIL ENGINEERING video" data-fallback-icon="🏗️" data-fallback-title="Civil Engineering" data-fallback-desc="Structural design and infrastructure connect materials, computation and construction at massive scale."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#eaf1f8;--accent:#145b8c">
+  <div class="copy">
+    <div class="chapter">03 / 16</div>
+    <h1>MECHANICAL ENGINEERING</h1>
+    <p class="subtitle">Machines evolved from mechanisms into precision systems</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Simple machines and mechanisms</li><li>Steam engines and industrial machinery</li><li>Internal-combustion engines</li><li>Computer-aided manufacturing</li><li>Precision mechatronics</li><li>Advanced simulation and digital twins</li><li>Autonomous intelligent machines</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>V8 engine technology</span><span>CNC manufacturing</span><span>Industrial machinery</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">ENGINE • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="mechanical" data-title="MECHANICAL ENGINEERING video" data-fallback-icon="⚙️" data-fallback-title="Mechanical Engineering" data-fallback-desc="Mechanical systems turn energy into precise, reliable motion across machines and industry."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#eef7ed;--accent:#236b3a">
+  <div class="copy">
+    <div class="chapter">04 / 16</div>
+    <h1>ELECTRICAL ENGINEERING</h1>
+    <p class="subtitle">Generating, converting and distributing power</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Early generators and electrical machines</li><li>AC power systems</li><li>Large-scale power stations</li><li>Transformers and transmission grids</li><li>Power electronics</li><li>Smart grids and automation</li><li>Renewable-integrated energy systems</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Indian power-grid expansion</span><span>Hydroelectric generation</span><span>Smart-grid deployment</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">TURBINE • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="electrical" data-title="ELECTRICAL ENGINEERING video" data-fallback-icon="⚡" data-fallback-title="Electrical Engineering" data-fallback-desc="Electrical systems generate, convert and distribute the power that runs modern infrastructure."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#f2eef9;--accent:#5c3a8a">
+  <div class="copy">
+    <div class="chapter">05 / 16</div>
+    <h1>ELECTRONICS & COMMUNICATION</h1>
+    <p class="subtitle">From discrete devices to billions of transistors</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Vacuum tubes</li><li>Transistors</li><li>Integrated circuits</li><li>Microprocessors</li><li>System-on-chip devices</li><li>Wireless and high-speed communication</li><li>AI accelerators and advanced packaging</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Microprocessor revolution</span><span>5G communication</span><span>Modern semiconductor fabrication</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">CHIP • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="electronics" data-title="ELECTRONICS & COMMUNICATION video" data-fallback-icon="🔌" data-fallback-title="Electronics & Communication" data-fallback-desc="Circuits and semiconductors carry signals, computation and connectivity across billions of devices."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#eaf3f7;--accent:#17657d">
+  <div class="copy">
+    <div class="chapter">06 / 16</div>
+    <h1>COMPUTER SCIENCE</h1>
+    <p class="subtitle">Information moved from isolated machines to global systems</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Early computing machines</li><li>Stored-program computers</li><li>Personal computing</li><li>Internet and the Web</li><li>Cloud computing</li><li>Distributed systems</li><li>Edge, quantum and AI-era computing</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Global cloud data centers</span><span>Internet infrastructure</span><span>Distributed computing</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">SERVER • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="computerScience" data-title="COMPUTER SCIENCE video" data-fallback-icon="💻" data-fallback-title="Computer Science" data-fallback-desc="Software, networks and cloud platforms connect engineering systems into global digital infrastructure."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#f0ecff;--accent:#5137a6">
+  <div class="copy">
+    <div class="chapter">07 / 16</div>
+    <h1>ARTIFICIAL INTELLIGENCE</h1>
+    <p class="subtitle">From hand-coded rules to learning systems</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Symbolic AI and expert systems</li><li>Machine learning</li><li>Deep neural networks</li><li>Computer vision and speech AI</li><li>Transformer architectures</li><li>Generative AI</li><li>Agentic and multimodal AI</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Large language models</span><span>Computer vision</span><span>AI copilots and agents</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">AI • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="ai" data-title="ARTIFICIAL INTELLIGENCE video" data-fallback-icon="🤖" data-fallback-title="Artificial Intelligence" data-fallback-desc="AI enables machines to learn, reason and make decisions from data."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#edf7f3;--accent:#14735b">
+  <div class="copy">
+    <div class="chapter">08 / 16</div>
+    <h1>ROBOTICS</h1>
+    <p class="subtitle">Machines gained sensors, actuators and autonomy</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Industrial manipulators</li><li>Programmable automation</li><li>Sensor-driven robotics</li><li>Collaborative robots</li><li>Computer vision</li><li>Autonomous mobile robots</li><li>Human-robot collaboration</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Automated assembly lines</span><span>Pick-and-place robots</span><span>Warehouse automation</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">ROBOT • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="robotics" data-title="ROBOTICS video" data-fallback-icon="🦾" data-fallback-title="Robotics in Engineering" data-fallback-desc="Robots combine mechanical systems, sensors and intelligent control to act in the physical world."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#fff0e6;--accent:#9b4318">
+  <div class="copy">
+    <div class="chapter">09 / 16</div>
+    <h1>AEROSPACE ENGINEERING</h1>
+    <p class="subtitle">Engineering flight from atmosphere to orbit</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Early powered flight</li><li>Jet propulsion</li><li>Supersonic aircraft</li><li>Space launch vehicles</li><li>Composite structures</li><li>Reusable launch technology</li><li>Private-spaceflight era</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Skyroot Vikram-S / Prarambh</span><span>ISRO launch vehicles</span><span>Reusable launch systems</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">ROCKET • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="aerospace" data-title="AEROSPACE ENGINEERING video" data-fallback-icon="🚀" data-fallback-title="Aerospace Engineering" data-fallback-desc="Aerospace engineering shapes flight and launch, from the atmosphere to reusable access to orbit."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#f8edf4;--accent:#8d3f67">
+  <div class="copy">
+    <div class="chapter">10 / 16</div>
+    <h1>BIOMEDICAL ENGINEERING</h1>
+    <p class="subtitle">Engineering merged with biology and medicine</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Mechanical medical devices</li><li>Medical imaging</li><li>Implantable devices</li><li>Prosthetics</li><li>Biosensors</li><li>Robotic-assisted medicine</li><li>Neural and personalized technologies</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Bionic prostheses</span><span>MRI and CT imaging</span><span>Robotic surgery</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">BIONIC • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="biomedical" data-title="BIOMEDICAL ENGINEERING video" data-fallback-icon="🩺" data-fallback-title="Biomedical Engineering" data-fallback-desc="Biomedical engineering merges mechanics, electronics and biology into imaging, prosthetics and care."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#edf7ef;--accent:#28714c">
+  <div class="copy">
+    <div class="chapter">11 / 16</div>
+    <h1>ENVIRONMENTAL ENGINEERING</h1>
+    <p class="subtitle">Engineering systems now work with nature, not against it</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Sanitation and water treatment</li><li>Pollution control</li><li>Waste management</li><li>Renewable energy</li><li>Energy efficiency</li><li>Circular economy</li><li>Climate-resilient infrastructure</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Wind-energy farms</span><span>Solar power systems</span><span>Advanced wastewater treatment</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">WIND • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="environmental" data-title="ENVIRONMENTAL ENGINEERING video" data-fallback-icon="🌱" data-fallback-title="Environmental Engineering" data-fallback-desc="Environmental engineering designs clean energy, water and waste systems that work with nature."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+<section class="scene" style="--bg:#eef1f7;--accent:#394e7a">
+  <div class="copy">
+    <div class="chapter">12 / 16</div>
+    <h1>INDUSTRIAL ENGINEERING</h1>
+    <p class="subtitle">Factories evolved into connected production systems</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>Mass production</li><li>Scientific management</li><li>Quality engineering</li><li>Lean manufacturing</li><li>Automation</li><li>Industry 4.0</li><li>Digital twins and predictive factories</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Automotive assembly</span><span>Smart warehouses</span><span>Robotic packaging</span></div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">FACTORY • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="industrial" data-title="INDUSTRIAL ENGINEERING video" data-fallback-icon="🏭" data-fallback-title="Industrial Engineering" data-fallback-desc="Industrial engineering connects automation, logistics and data into efficient production systems."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+
+<section class="scene" style="--bg:#edf5f2;--accent:#1f6f5b">
+  <div class="copy">
+    <div class="chapter">13 / 16</div>
+    <h1>ADVANTAGES OF TECHNOLOGY</h1>
+    <p class="subtitle">Technology makes engineering faster, safer, more accurate and more scalable</p>
+    <div class="rule"></div>
+    <h2>KEY BENEFITS</h2><ol><li>Higher accuracy through simulation, sensing and digital measurement</li><li>Faster design cycles using CAD, modelling and AI-assisted tools</li><li>Improved safety through automation, monitoring and predictive maintenance</li><li>Lower operating costs through optimization and smart manufacturing</li><li>Better sustainability through renewable energy and resource efficiency</li><li>Global collaboration through cloud platforms and connected systems</li></ol>
+  </div>
+  <div class="visual">
+    <div class="visual-label">ADVANTAGES</div>
+    <div class="info-visual"><div class="card-grid"><div class="mini-card"><b>ACCURACY</b><span>Data-driven decisions</span></div><div class="mini-card"><b>SPEED</b><span>Rapid design & testing</span></div><div class="mini-card"><b>SAFETY</b><span>Monitoring & automation</span></div><div class="mini-card"><b>SCALE</b><span>Smart production</span></div></div></div>
+  </div>
+</section>
+
+
+<section class="scene" style="--bg:#f7efec;--accent:#9a4a35">
+  <div class="copy">
+    <div class="chapter">14 / 16</div>
+    <h1>DISADVANTAGES & CHALLENGES</h1>
+    <p class="subtitle">Engineering technology also creates new technical, economic and social responsibilities</p>
+    <div class="rule"></div>
+    <h2>KEY CHALLENGES</h2><ol><li>High initial investment in advanced equipment and digital infrastructure</li><li>Cybersecurity and data-privacy risks in connected systems</li><li>Dependence on software, networks and reliable digital infrastructure</li><li>Workforce disruption when automation replaces repetitive tasks</li><li>Electronic waste and energy consumption from growing digital systems</li><li>Ethical risks when AI decisions are poorly designed or supervised</li></ol>
+  </div>
+  <div class="visual">
+    <div class="visual-label">CHALLENGES</div>
+    <div class="info-visual"><div class="challenge-stack"><div>01 <b>COST</b><span>Investment & maintenance</span></div><div>02 <b>RISK</b><span>Cybersecurity & reliability</span></div><div>03 <b>PEOPLE</b><span>Skills & workforce change</span></div><div>04 <b>PLANET</b><span>Energy & e-waste</span></div></div></div>
+  </div>
+</section>
+
+
+<section class="scene" style="--bg:#eef2f8;--accent:#345b86">
+  <div class="copy">
+    <div class="chapter">15 / 16</div>
+    <h1>PRACTICAL ACHIEVEMENTS</h1>
+    <p class="subtitle">Real-world engineering achievements show how multiple technologies work together</p>
+    <div class="rule"></div>
+    <h2>6 EXAMPLES</h2><ol><li><b>Chenab Railway Bridge</b> — advanced structural engineering at extreme scale</li><li><b>Indian Metro Systems</b> — civil, electrical, signalling and automation integrated together</li><li><b>Chandrayaan & ISRO missions</b> — aerospace, electronics, software and control engineering</li><li><b>5G Networks</b> — high-speed wireless communication and advanced semiconductor systems</li><li><b>Industrial Robotics</b> — automated assembly, inspection and warehouse operations</li><li><b>Renewable Energy Farms</b> — engineering of solar, wind, power electronics and smart grids</li></ol>
+  </div>
+  <div class="visual">
+    <div class="visual-label">6 PRACTICAL ACHIEVEMENTS</div>
+    <div class="info-visual"><div class="achievement-ring"><div><strong>6</strong><span>EXAMPLES</span></div></div></div>
+  </div>
+</section>
+
+<section class="scene" style="--bg:#eeeaf8;--accent:#493d82">
+  <div class="copy">
+    <div class="chapter">16 / 16</div>
+    <h1>FUTURE OF ENGINEERING</h1>
+    <p class="subtitle">Engineering is converging into one intelligent ecosystem</p>
+    <div class="rule"></div>
+    <h2>EVOLUTION</h2>
+    <ol><li>AI-assisted design</li><li>Autonomous machines</li><li>Connected infrastructure</li><li>Advanced robotics</li><li>Clean energy systems</li><li>Biomanufacturing and new materials</li><li>Human-AI engineering collaboration</li></ol>
+    <h2 class="example-title">PRACTICAL EXAMPLES</h2>
+    <div class="examples"><span>Smart cities</span><span>Autonomous infrastructure</span><span>AI-designed engineering systems</span></div>
+    <div class="start-quiz-row">
+      <button class="start-quiz-btn" id="startQuizBtn">START QUIZ →</button>
+    </div>
+  </div>
+  <div class="visual">
+    <div class="visual-label">FUTURE • ENGINEERING VIDEO</div>
+    <div class="video-frame" data-video="future" data-title="FUTURE OF ENGINEERING video" data-fallback-icon="🌐" data-fallback-title="Future of Engineering" data-fallback-desc="Engineering disciplines are converging into one connected, intelligent, AI-assisted ecosystem."></div>
+    <div class="visual-foot">REFERENCE VIDEO • AUTOPLAY • MUTED</div>
+  </div>
+</section>
+</div>
+
+<div id="quizOverlay" style="--quiz-accent:#493d82">
+  <div class="quiz-card">
+    <div class="quiz-top">
+      <div class="quiz-eyebrow" id="quizEyebrow">ENGINEERING QUIZ</div>
+      <div class="quiz-counter" id="quizCounter">QUESTION 1 / 10</div>
+    </div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-foot"><button class="quiz-next-btn" id="quizNextBtn">NEXT →</button></div>
+  </div>
+</div>
+
+<div id="resultOverlay">
+  <div class="result-card">
+    <div class="result-eyebrow">QUIZ COMPLETED</div>
+    <div class="result-ring-wrap">
+      <svg viewBox="0 0 170 170">
+        <circle cx="85" cy="85" r="72" stroke="rgba(0,0,0,.08)"></circle>
+        <circle cx="85" cy="85" r="72" stroke="#8a4b1f" id="resultRing" stroke-dasharray="452" stroke-dashoffset="452" stroke-linecap="round"></circle>
+      </svg>
+      <div class="result-pct" id="resultPct">0%</div>
+    </div>
+    <div class="result-stats">
+      <div class="result-stat"><b id="resultCorrect" style="color:#2f8a55">0</b><span>CORRECT</span></div>
+      <div class="result-stat"><b id="resultWrong" style="color:#b3402f">0</b><span>WRONG</span></div>
+    </div>
+    <div class="result-actions">
+      <button class="result-btn primary" id="retakeBtn">↻ RETAKE QUIZ</button>
+      <button class="result-btn" id="backBtn">← BACK TO PRESENTATION</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  const body=document.body;
+  const scenes=[...document.querySelectorAll('.scene')];
+  const frames=[...document.querySelectorAll('.video-frame')];
+  let quizOpen=false;
+
+  // ===== Central media configuration =====
+  // To add or replace media later, just change (or add) an entry here —
+  // every slide reads from this object instead of hard-coding a path.
+  // Type: "video" for native HTML5 autoplay videos, "image" for static images.
+  const mediaSources = {
+    civil:       { type: "video", src: "videos/civil-engineering.mp4" },
+    mechanical:  { type: "video", src: "videos/mechanical-engineering.mp4" },
+    electrical:  { type: "video", src: "videos/electrical-electronics-engineering.mp4" },
+    electronics: { type: "video", src: "videos/Engineering.mp4" },
+    computerScience: { type: "video", src: "videos/Computer Science.mp4" },
+    ai:          { type: "video", src: "videos/artificial-intelligence.mp4" },
+    robotics:    { type: "video", src: "videos/robotics.mp4" },
+    aerospace:   { type: "video", src: "videos/aerospace-engineering.mp4" },
+    biomedical:  { type: "video", src: "videos/Biomedical Engineering.mp4" },
+    environmental: { type: "video", src: "videos/Environmental Engineering.mp4" },
+    industrial:  { type: "video", src: "videos/Industrial Engineering.mp4" },
+    future:      { type: "image", src: "videos/future of engineering.png" }
+  };
+
+  // Renders the same-size, same-position fallback panel inside a video-frame.
+  // Never a blank box and never a raw browser error — always relevant,
+  // on-topic content that matches the rest of the deck's visual style.
+  function showVideoFallback(box){
+    if(box.dataset.fallbackShown==='1') return;
+    box.dataset.fallbackShown='1';
+    box.dataset.loaded='1';
+    box.querySelectorAll('video').forEach(v=>v.remove());
+    const icon=box.dataset.fallbackIcon||'▶';
+    const title=box.dataset.fallbackTitle||box.dataset.title||'Related video';
+    const desc=box.dataset.fallbackDesc||'A local or related video for this topic is not available yet.';
+    const panel=document.createElement('div');
+    panel.className='video-fallback';
+    panel.innerHTML=`<div class="vf-tag">VIDEO UNAVAILABLE</div><div class="vf-icon" aria-hidden="true">${icon}</div><h3 class="vf-title">${title}</h3><p class="vf-desc">${desc}</p>`;
+    box.appendChild(panel);
+  }
+
+  // Loads the configured local media (video or image) into a video-frame.
+  // Falls back gracefully (never a black box, broken player or raw error)
+  // if the file is missing, unsupported, or fails to load for any reason.
+  function loadMedia(mediaId, box){
+    const media=mediaSources[mediaId];
+    console.log('loadMedia called:', mediaId, 'media config:', media, 'box:', box);
+    if(!media){ 
+      console.warn('No media config found for:', mediaId);
+      showVideoFallback(box); 
+      return; 
+    }
+    
+    if(media.type==='image'){
+      // Render static image (e.g., Future of Engineering)
+      try{
+        console.log('Loading image:', media.src);
+        const img=document.createElement('img');
+        img.src=media.src;
+        img.alt=box.dataset.fallbackTitle || box.dataset.title || 'Engineering reference image';
+        img.style.cssText='width:100%;height:100%;border:0;display:block;border-radius:24px;background:#000;object-fit:cover;';
+        img.addEventListener('error',()=>{
+          console.error('Image load error:', media.src);
+          showVideoFallback(box);
+        });
+        img.addEventListener('load',()=>{
+          console.log('Image loaded successfully:', media.src);
+        });
+        box.appendChild(img);
+        box.dataset.loaded='1';
+      }catch(err){
+        console.error('Error loading image:', err);
+        showVideoFallback(box);
+      }
+    } else if(media.type==='video'){
+      // Render muted, looping video with no controls (play triggered on slide activation only)
+      try{
+        console.log('Loading video:', media.src);
+        const video=document.createElement('video');
+        video.controls=false;
+        video.playsInline=true;
+        video.muted=true;
+        video.loop=true;
+        video.preload='auto';
+        video.setAttribute('aria-label', box.dataset.fallbackTitle || box.dataset.title || 'Engineering reference video');
+        video.style.cssText='width:100%;height:100%;border:0;display:block;border-radius:24px;background:#000;object-fit:cover;';
+        const source=document.createElement('source');
+        source.src=media.src;
+        source.type='video/mp4';
+        video.appendChild(source);
+        let errorHandled=false;
+        video.addEventListener('error',()=>{
+          console.error('Video load error:', media.src);
+          if(!errorHandled){
+            errorHandled=true;
+            showVideoFallback(box);
+          }
+        });
+        video.addEventListener('canplay',()=>{
+          console.log('Video canplay:', media.src);
+        });
+        video.addEventListener('playing',()=>{
+          console.log('Video playing:', media.src);
+        });
+        box.appendChild(video);
+        box.dataset.loaded='1';
+        box._video=video;
+        // Attempt play, but don't force it - let updateActive handle play/pause
+        video.play().catch(()=>{});
+      }catch(err){
+        console.error('Error loading video:', err);
+        showVideoFallback(box);
+      }
+    } else {
+      console.warn('Unknown media type:', media.type);
+      showVideoFallback(box);
+    }
+  }
+
+  function loadFrame(box){
+    if(!box || box.dataset.loaded==='1') return;
+    loadMedia(box.dataset.video, box);
+  }
+
+  let active=0, prevActive=-1, ticking=false;
+  function updateActive(){
+    const idx=Math.round(body.scrollLeft / Math.max(1,window.innerWidth));
+    active=Math.max(0,Math.min(scenes.length-1,idx));
+    // Load videos for current and neighboring slides
+    [active-1,active,active+1].forEach(i=>{ 
+      if(scenes[i]){
+        const frame=scenes[i].querySelector('.video-frame');
+        if(frame && !frame.dataset.loaded) loadFrame(frame);
+      }
+    });
+    // Only manage video playback if active slide actually has a video
+    if(prevActive!==active){
+      const prevScene=scenes[prevActive];
+      if(prevScene){
+        const prevVideo=prevScene.querySelector('.video-frame video');
+        if(prevVideo){ try{ prevVideo.pause(); }catch(e){} }
+      }
+      const curScene=scenes[active];
+      if(curScene){
+        const curVideo=curScene.querySelector('.video-frame video');
+        if(curVideo){ 
+          try{ 
+            curVideo.play().catch(err=>console.log('Play after slide transition:', err)); 
+          }catch(e){} 
+        }
+      }
+      prevActive=active;
+    }
+    ticking=false;
+  }
+
+  body.addEventListener('scroll',()=>{
+    if(!ticking){ requestAnimationFrame(updateActive); ticking=true; }
+  },{passive:true});
+  window.addEventListener('resize',updateActive);
+
+  body.addEventListener('wheel',e=>{
+    if(quizOpen) return;
+    if(e.target.closest && e.target.closest('.video-frame video')) return;
+    if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+      e.preventDefault();
+      body.scrollLeft += e.deltaY*1.35;
+    }
+  },{passive:false});
+
+  // Initialize: load all frames immediately
+  updateActive();
+  // Pre-load all video frames (they'll use fallback if not needed)
+  frames.forEach(frame => {
+    if(!frame.dataset.loaded) loadFrame(frame);
+  });
+
+  /* ======================= QUIZ ======================= */
+  const QUESTIONS=[
+    { q:"Which bridge is mentioned as a practical example of civil engineering?", options:["Chenab Railway Bridge","Golden Gate Bridge","Brooklyn Bridge","Eiffel Tower"], correct:0 },
+    { q:"Which of these is a practical example of mechanical engineering in the presentation?", options:["Cloud computing","CNC manufacturing","Robotic surgery","Wind energy"], correct:1 },
+    { q:"What do smart grids mainly help manage?", options:["Software bugs","Aircraft navigation","Electrical power distribution","Blood pressure"], correct:2 },
+    { q:"What technology replaced vacuum tubes in electronics?", options:["Transistors","CNC machines","Wind turbines","Bridges"], correct:0 },
+    { q:"What lets people store and access data over the internet?", options:["3D printing","Cloud computing","Biosensors","CNC"], correct:1 },
+    { q:"What can Generative AI create?", options:["Bridges","Turbines","Text, images and code","Vaccines"], correct:2 },
+    { q:"What are collaborative robots designed to do?", options:["Replace all bridges","Work safely alongside humans","Generate electricity","Treat patients alone"], correct:1 },
+    { q:"What is a reusable launch vehicle designed to do?", options:["Perform surgery","Store data","Fly to space and land again for reuse","Purify water"], correct:2 },
+    { q:"Which of these is an example of biomedical engineering technology?", options:["Smart grids","Robotic surgery","Semiconductors","3D-printed buildings"], correct:1 },
+    { q:"According to the presentation, what is engineering converging into?", options:["Separate unrelated fields","Only manual work","One intelligent ecosystem","A single company"], correct:2 }
+  ];
+
+  const quizOverlay=document.getElementById('quizOverlay');
+  const resultOverlay=document.getElementById('resultOverlay');
+  const quizQuestion=document.getElementById('quizQuestion');
+  const quizOptions=document.getElementById('quizOptions');
+  const quizCounter=document.getElementById('quizCounter');
+  const quizNextBtn=document.getElementById('quizNextBtn');
+  const resultPct=document.getElementById('resultPct');
+  const resultCorrect=document.getElementById('resultCorrect');
+  const resultWrong=document.getElementById('resultWrong');
+  const resultRing=document.getElementById('resultRing');
+
+  let qIndex=0, score=0;
+
+  function startQuiz(){
+    quizOpen=true;
+    qIndex=0; score=0;
+    resultOverlay.classList.remove('show');
+    quizOverlay.classList.add('show');
+    renderQuestion();
+  }
+
+  function renderQuestion(){
+    try{
+      const q=QUESTIONS[qIndex];
+      if(!q) throw new Error('missing question');
+      quizCounter.textContent=`QUESTION ${qIndex+1} / ${QUESTIONS.length}`;
+      quizQuestion.textContent=q.q;
+      quizOptions.innerHTML='';
+      quizNextBtn.classList.remove('show');
+      q.options.forEach((opt,i)=>{
+        const btn=document.createElement('button');
+        btn.className='quiz-opt';
+        btn.textContent=opt;
+        btn.addEventListener('click',()=>answer(i));
+        quizOptions.appendChild(btn);
+      });
+    }catch(err){
+      quizQuestion.textContent='Quiz error — this question could not load.';
+      quizOptions.innerHTML='';
+      quizNextBtn.classList.add('show');
+    }
+  }
+
+  function answer(i){
+    const q=QUESTIONS[qIndex];
+    const opts=[...quizOptions.children];
+    opts.forEach(o=>o.disabled=true);
+    opts[q.correct].classList.add('correct');
+    if(i!==q.correct) opts[i].classList.add('wrong'); else score++;
+    quizNextBtn.classList.add('show');
+  }
+
+  quizNextBtn.addEventListener('click',()=>{
+    qIndex++;
+    if(qIndex>=QUESTIONS.length) showResult(); else renderQuestion();
+  });
+
+  function showResult(){
+    quizOverlay.classList.remove('show');
+    resultOverlay.classList.add('show');
+    const pct=Math.round((score/QUESTIONS.length)*100);
+    resultPct.textContent=pct+'%';
+    resultCorrect.textContent=score;
+    resultWrong.textContent=QUESTIONS.length-score;
+    const circumference=2*Math.PI*72;
+    requestAnimationFrame(()=>{
+      resultRing.style.transition='stroke-dashoffset 1s ease-out';
+      resultRing.style.strokeDashoffset=circumference-(pct/100)*circumference;
+    });
+  }
+
+  document.getElementById('startQuizBtn').addEventListener('click',startQuiz);
+  document.getElementById('retakeBtn').addEventListener('click',startQuiz);
+  document.getElementById('backBtn').addEventListener('click',()=>{
+    quizOpen=false;
+    resultOverlay.classList.remove('show');
+    quizOverlay.classList.remove('show');
+    body.scrollLeft=(scenes.length-1)*window.innerWidth;
+  });
+
+  window.addEventListener('keydown',(e)=>{
+    if(!quizOpen) return;
+    if(e.key==='Escape'){
+      quizOpen=false;
+      quizOverlay.classList.remove('show');
+      resultOverlay.classList.remove('show');
+    }
+  });
+})();
+</script></body>
